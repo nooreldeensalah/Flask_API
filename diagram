@@ -1,0 +1,88 @@
+// Interactive Data Models
+digraph {
+	graph [bgcolor="#EEEEEE" rankdir=TB splines=spline]
+	node [fontname=Roboto fontsize=12 shape=none]
+	edge [fontname=Roboto fontsize=10]
+	Product [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD COLSPAN="2" BGCOLOR="#3F51B5"><FONT COLOR="white">Product</FONT></TD></TR>
+        <TR>
+                         <TD BGCOLOR="#BBDEFB">id</TD>
+                         <TD BGCOLOR="#BBDEFB">INTEGER (PK)</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">product_name</TD>
+                         <TD BGCOLOR="#BBDEFB">VARCHAR(100) ()</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">price</TD>
+                         <TD BGCOLOR="#BBDEFB">FLOAT ()</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">stock</TD>
+                         <TD BGCOLOR="#BBDEFB">INTEGER ()</TD>
+                         </TR></TABLE>> URL="http://Product_details.html"]
+	Product -> OrderItem [label=order_items color="#1E88E5" style=dashed tooltip="Relation between Product and OrderItem"]
+	Order [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD COLSPAN="2" BGCOLOR="#3F51B5"><FONT COLOR="white">Order</FONT></TD></TR>
+        <TR>
+                         <TD BGCOLOR="#BBDEFB">id</TD>
+                         <TD BGCOLOR="#BBDEFB">INTEGER (PK)</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">user_id</TD>
+                         <TD BGCOLOR="#BBDEFB">INTEGER ()</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">order_date</TD>
+                         <TD BGCOLOR="#BBDEFB">DATETIME ()</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">total_amount</TD>
+                         <TD BGCOLOR="#BBDEFB">FLOAT ()</TD>
+                         </TR></TABLE>> URL="http://Order_details.html"]
+	Order -> User [label=user color="#1E88E5" style=dashed tooltip="Relation between Order and User"]
+	Order -> OrderItem [label=order_items color="#1E88E5" style=dashed tooltip="Relation between Order and OrderItem"]
+	OrderItem [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD COLSPAN="2" BGCOLOR="#3F51B5"><FONT COLOR="white">OrderItem</FONT></TD></TR>
+        <TR>
+                         <TD BGCOLOR="#BBDEFB">id</TD>
+                         <TD BGCOLOR="#BBDEFB">INTEGER (PK)</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">order_id</TD>
+                         <TD BGCOLOR="#BBDEFB">INTEGER ()</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">product_id</TD>
+                         <TD BGCOLOR="#BBDEFB">INTEGER ()</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">quantity</TD>
+                         <TD BGCOLOR="#BBDEFB">INTEGER ()</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">subtotal</TD>
+                         <TD BGCOLOR="#BBDEFB">FLOAT ()</TD>
+                         </TR></TABLE>> URL="http://OrderItem_details.html"]
+	OrderItem -> Order [label=order color="#1E88E5" style=dashed tooltip="Relation between OrderItem and Order"]
+	OrderItem -> Product [label=product color="#1E88E5" style=dashed tooltip="Relation between OrderItem and Product"]
+	User [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0">
+        <TR><TD COLSPAN="2" BGCOLOR="#3F51B5"><FONT COLOR="white">User</FONT></TD></TR>
+        <TR>
+                         <TD BGCOLOR="#BBDEFB">id</TD>
+                         <TD BGCOLOR="#BBDEFB">INTEGER (PK)</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">first_name</TD>
+                         <TD BGCOLOR="#BBDEFB">VARCHAR(80) ()</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">last_name</TD>
+                         <TD BGCOLOR="#BBDEFB">VARCHAR(80) ()</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">email</TD>
+                         <TD BGCOLOR="#BBDEFB">VARCHAR(120) (Unique)</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">phone_number</TD>
+                         <TD BGCOLOR="#BBDEFB">VARCHAR(20) ()</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">password_hash</TD>
+                         <TD BGCOLOR="#BBDEFB">VARCHAR(128) ()</TD>
+                         </TR><TR>
+                         <TD BGCOLOR="#BBDEFB">is_admin</TD>
+                         <TD BGCOLOR="#BBDEFB">BOOLEAN ()</TD>
+                         </TR></TABLE>> URL="http://User_details.html"]
+	User -> Order [label=orders color="#1E88E5" style=dashed tooltip="Relation between User and Order"]
+}
