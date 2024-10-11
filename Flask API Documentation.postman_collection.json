@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "7a80b6cb-2a83-455d-8acb-e1b33d181cc5",
+		"name": "Flask API Documentation",
+		"description": "This is a simple Flask API application that implements JWT authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15684866"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"Noor\",\r\n    \"last_name\": \"Salah\",\r\n    \"email\": \"not_admin@example.com\",\r\n    \"phone_number\": \"01061681777\",\r\n    \"password\": \"password\",\r\n    \"is_admin\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"register"
+					]
+				},
+				"description": "**Description**: This endpoint registers a new user by accepting a JSON payload with `first_name`, `last_name`, `email`, `phone_number`, `password` and `is_admin` to indicate if the user has admin privileges or not.\n\nThe sample request body registers a user with no admin privileges."
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"ACCESS_TOKEN\", pm.response.json().access_token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"not_admin@example.com\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				},
+				"description": "**Description**: This endpoint authenticates a user and returns a JWT token upon successful login.  \nIt has a `post-request` script to assign the returned JWT as `ACCESS_TOKEN` variable\n\nThe sample request body preforms the login operation for a user with no admin privileges."
+			},
+			"response": []
+		},
+		{
+			"name": "Register - Admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"Noor\",\r\n    \"last_name\": \"Salah\",\r\n    \"email\": \"admin@example.com\",\r\n    \"phone_number\": \"01061681777\",\r\n    \"password\": \"password\",\r\n    \"is_admin\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"register"
+					]
+				},
+				"description": "**Description**: This endpoint registers a new user by accepting a JSON payload with `first_name`, `last_name`, `email`, `phone_number`, `password` and `is_admin` to indicate if the user has admin privileges or not.\n\nThe sample request body registers a user <u>with</u> admin privileges."
+			},
+			"response": []
+		},
+		{
+			"name": "Login - Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ACCESS_TOKEN\", pm.response.json().access_token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				},
+				"description": "**Description**: This endpoint authenticates a user and returns a JWT token upon successful login.  \nIt has a `post-request` script to assign the returned JWT as `ACCESS_TOKEN` variable\n\nThe sample request body preforms the login operation for a user <u>with</u> privileges."
+			},
+			"response": []
+		},
+		{
+			"name": "Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/admin_only_page",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"admin_only_page"
+					]
+				},
+				"description": "**Description**: This endpoint is accessible only to admin users."
+			},
+			"response": []
+		},
+		{
+			"name": "All Users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/all_users",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"all_users"
+					]
+				},
+				"description": "**Description**: This endpoint is accessible to both regular users and admins."
+			},
+			"response": []
+		},
+		{
+			"name": "Visitor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/visitor",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"visitor"
+					]
+				},
+				"description": "**Description**: This endpoint is accessible by anyone (users, admins, and visitors)."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ACCESS_TOKEN",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
