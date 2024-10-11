@@ -44,3 +44,14 @@ def login():
     access_token = create_access_token(identity=user.id)
     return jsonify({'access_token': access_token}), 200
 
+@main_blueprint.route('/admin_only_page', methods=['GET'])
+@jwt_required()
+def admin_only():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    
+    if user.is_admin:
+        return jsonify({'message': f'Hello {user.first_name}'}), 200
+    else:
+        return jsonify({'error': 'Admin access only'}), 403
+
