@@ -55,3 +55,10 @@ def admin_only():
     else:
         return jsonify({'error': 'Admin access only'}), 403
 
+@main_blueprint.route('/all_users', methods=['GET'])
+@jwt_required()
+def all_users():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
+    return jsonify({'message': f'Hello {user.first_name}'}), 200
+
