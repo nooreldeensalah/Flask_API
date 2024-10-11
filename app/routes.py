@@ -33,3 +33,14 @@ def register():
     except IntegrityError:
         return jsonify({'error': 'User with this email already exists'}), 400
 
+@main_blueprint.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+
+    user = User.query.filter_by(email=data['email']).first()
+    if not user or not check_password_hash(user.password_hash, data['password']):
+        return jsonify({'error': 'Invalid credentials'}), 401
+
+    access_token = create_access_token(identity=user.id)
+    return jsonify({'access_token': access_token}), 200
+
