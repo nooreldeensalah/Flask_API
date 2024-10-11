@@ -62,3 +62,6 @@ def all_users():
     user = User.query.get(current_user_id)
     return jsonify({'message': f'Hello {user.first_name}'}), 200
 
+@main_blueprint.route('/visitor', methods=['GET'])
+def visitor():
+    return jsonify({'message': 'Hello Visitor'}), 200
