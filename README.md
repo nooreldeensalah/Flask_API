@@ -32,3 +32,8 @@ python main.py
 ## Documentation
 
 API documentation was generated using Postman, to access the documentation visit this [link](https://documenter.getpostman.com/view/15684866/2sAXxS6W2p).
+
+## E-Commerce Models ER Diagram
+
+An ER diagram was generated using `sqlalchemy-data-model-visualizer` from the existing SQLAlchemy models.
+![ER Diagram](./diagram.svg)
