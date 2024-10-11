@@ -24,5 +24,9 @@ def create_app():
     jwt.init_app(app)
     migrate.init_app(app, db)
 
+    # Register Blueprints
+    from app.routes import main_blueprint
+    app.register_blueprint(main_blueprint)
+
     return app
 
