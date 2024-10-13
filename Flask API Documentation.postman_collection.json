@@ -122,7 +122,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.environment.set(\"ACCESS_TOKEN\", pm.response.json().access_token)"
+							"pm.collectionVariables.set(\"ACCESS_TOKEN\", pm.response.json().access_token)"
 						],
 						"type": "text/javascript",
 						"packages": {}
