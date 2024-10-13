@@ -99,7 +99,7 @@ You can also run the application by building a docker image and deploying a cont
 docker build -t flask-app-demo .
 
 # Run the docker container
-docker run -p 8000:8000 -e SECRET_KEY=mysecretkey123 -e SQLALCHEMY_DATABASE_URI=sqlite:///app.db -e JWT_SECRET_KEY=myjwtsecretkey456 flask-app-demo
+docker run -d -p 8000:8000 -e SECRET_KEY=mysecretkey123 -e SQLALCHEMY_DATABASE_URI=sqlite:///app.db -e JWT_SECRET_KEY=myjwtsecretkey456 flask-app-demo
 ```
 
 The application is accessible at `http://localhost:8000`, you can access the Swagger documentation at `http://localhost:8000/docs`
