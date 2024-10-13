@@ -3,7 +3,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from flask_jwt_extended import JWTManager
-from flask_migrate import Migrate
+from flask_migrate import Migrate, upgrade
 from dotenv import load_dotenv
 from app.swagger import create_api
 
@@ -39,5 +39,21 @@ def create_app():
     from app.routes import api as users_api
     api.add_namespace(users_api, path='/api/users')
 
+    # Apply database migrations automatically
+    with app.app_context():
+        apply_migrations()
+
     return app
 
+def apply_migrations():
+    """
+    Function to apply migrations automatically and create tables if not already existing.
+    """
+    # Make sure all migrations are applied
+    try:
+        upgrade()
+        print("Migrations applied successfully!")
+    except Exception as e:
+        print(f"Error applying migrations: {e}")
+        db.create_all()
+        print("Tables created manually!")
