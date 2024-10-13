@@ -5,11 +5,12 @@ from sqlalchemy.orm import DeclarativeBase
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 from dotenv import load_dotenv
+from app.swagger import create_api
 
 load_dotenv()
 
 class Base(DeclarativeBase):
-  pass
+    pass
 
 # Initialize extensions
 db = SQLAlchemy(model_class=Base)
@@ -24,15 +25,19 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+    app.config['PROPAGATE_EXCEPTIONS'] = True
 
     # Initialize extensions with app instance
     db.init_app(app)
     jwt.init_app(app)
     migrate.init_app(app, db)
 
-    # Register Blueprints
-    from app.routes import main_blueprint
-    app.register_blueprint(main_blueprint)
+    # Initialize Swagger API
+    api = create_api(app)
+
+    # Register Namespaces (from flask-restx)
+    from app.routes import api as users_api
+    api.add_namespace(users_api, path='/api/users')
 
     return app
 
