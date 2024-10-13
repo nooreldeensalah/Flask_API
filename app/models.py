@@ -15,13 +15,6 @@ class User(db.Model):
     
     orders = db.relationship('Order', back_populates='user')
 
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
 class Product(db.Model):
     __tablename__ = 'products'
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
